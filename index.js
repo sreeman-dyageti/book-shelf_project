@@ -24,10 +24,36 @@ const db = new pg.Client({
 db.connect();
 
 // text
-app.get('/',(req,res)=>{
-    res.send("working");
+app.get("/",async (req,res)=>{
+  try {
+    const sort= req.query.sort || "newest";
+    let query=`
+    SELECT books.*,authors.name AS author_name
+    FROM books
+    JOIN authors ON books.author_id = authors.id
+  `;
+    if (sort === "rating") {
+      query +="ORDER BY rating DESC;"
+      
+    } else {
+      query +="ORDER BY created_at DESC;"
+    }
+
+  const result = await db.query(query);
+    res.render("index.ejs",{
+      books : result.rows,
+      sort: sort
+    });
+  } catch (err) {
+    console.error(err);
+    res.send("Error fetching books");
+    
+  }
+
 
 });
+
+
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
