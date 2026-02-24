@@ -1,6 +1,6 @@
 import express from 'express'
 import pg from 'pg'
-import axiox from 'axios'
+import axios from 'axios'
 import bodyParser from 'body-parser'
 
 
@@ -23,7 +23,7 @@ const db = new pg.Client({
 
 db.connect();
 
-// text
+// home page 
 app.get("/",async (req,res)=>{
   try {
     const sort= req.query.sort || "newest";
@@ -49,9 +49,29 @@ app.get("/",async (req,res)=>{
     res.send("Error fetching books");
     
   }
+});
 
+// for new book adding form
+app.get("/add",async(req,res)=>{
+  res.render("add.ejs");
+});
+
+// add new book 
+app.post("/add",async(req,res)=>{
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 app.listen(port, () => {
