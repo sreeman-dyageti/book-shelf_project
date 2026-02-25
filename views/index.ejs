@@ -11,6 +11,7 @@
       <p><strong>Author:</strong> <%= book.author_name %></p>
       <p><strong>Rating:</strong> ⭐ <%= book.rating %></p>
       <p><%= book.review %></p>
+      <a href="/edit/<%= book.id %>">Edit</a>
     </div>
     <hr>
   <% }); %>

@@ -85,6 +85,54 @@ app.post("/add",async(req,res)=>{
   
 });
 
+// To edit specific book
+app.get("/edit/:id",async (req,res)=>{
+  try {
+    const id=req.params.id;
+    const edit =await db.query(`
+      SELECT * FROM books, authors.name AS author_name
+      FROM books
+      JOIN authors ON books.author_id = authors.id
+      `);
+      res.render("edit.ejs",{ books:edit.rows[0]});
+    
+  } catch (error) {
+    console.log(error);
+    res.send("Error loading edit page");
+  }
+
+});
+app.post("/edit/:id",async (req,res)=>{
+  try {
+    const id=req.params.id;
+    const{title,author,isbn,rating,review}=req.body;
+  //  check author
+  let authorResult=await db.query("SELECT * FROM authors WHERE name = $1",[author]);
+  let authorId;
+  if (authorResult.rows.length === 0) {
+    const newAuthor = await db.query("INSERT INTO authors(name) VALUES($1) RETURNING id",[author]);
+    authorId = newAuthor.rows[0].id;
+  } else {
+    authorId = authorResult.rows[0].id;
+  }
+  await db.query(`
+    UPDATE books
+    SET title =$1,
+    isbn = $2,
+    rating = $3,
+    review =$4,
+    author_id=$5
+    WHERE id = $6
+    `,[title, isbn, rating, review, authorId, id]);
+     res.redirect("/");
+
+  } catch (error) {
+  console.log(error);
+  res.send("Error updating book");
+  }
+});
+
+
 
 
 
