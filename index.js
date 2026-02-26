@@ -57,32 +57,40 @@ app.get("/add",async(req,res)=>{
 });
 
 // add new book 
-app.post("/add",async(req,res)=>{
+app.post("/add", async (req, res) => {
   try {
-    const {title,author,isbn,rating,review}=req.body;
-    // check if author name exist
-    let authorResult=await db.query("SELECT * FROM authors WHERE name =LIKE '%' || $1 || '%'",
-      [author]);
+    const { title, author, isbn, rating, review } = req.body;
+
+    // Check if author exists
+    let authorResult = await db.query(
+      "SELECT * FROM authors WHERE name = $1",
+      [author]
+    );
 
     let authorId;
-    // new Author
-    if(authorResult.rows.length === 0){
-      const newAuthor=await db.query("INSERT INTO authors (name) VALUE($1) RETURNING id",[author]);
+
+    if (authorResult.rows.length === 0) {
+      const newAuthor = await db.query(
+        "INSERT INTO authors (name) VALUES ($1) RETURNING id",
+        [author]
+      );
       authorId = newAuthor.rows[0].id;
-    }else{
+    } else {
       authorId = authorResult.rows[0].id;
     }
-    // insert Book
-    const insertBook = db.query("INSERT INTO books(title,isbn,rating,review,author_id) VALUES($1,$2,$3,$4,$5)",
-      [title,isbn,rating,review,authorId]
+
+    // Insert Book
+    await db.query(
+      "INSERT INTO books(title, isbn, rating, review, author_id) VALUES($1,$2,$3,$4,$5)",
+      [title, isbn, rating, review, authorId]
     );
-    
+
     res.redirect("/");
+
   } catch (err) {
     console.log(err);
     res.send("Error Adding Book");
   }
-  
 });
 
 // To edit specific book
@@ -90,11 +98,12 @@ app.get("/edit/:id",async (req,res)=>{
   try {
     const id=req.params.id;
     const edit =await db.query(`
-      SELECT * FROM books, authors.name AS author_name
+      SELECT books.*, authors.name AS author_name
       FROM books
       JOIN authors ON books.author_id = authors.id
-      `);
-      res.render("edit.ejs",{ books:edit.rows[0]});
+       WHERE books.id = $1`,
+      [id]);
+      res.render("edit.ejs",{ book:edit.rows[0]});
     
   } catch (error) {
     console.log(error);
