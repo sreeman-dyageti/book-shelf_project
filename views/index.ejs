@@ -12,6 +12,9 @@
       <p><strong>Rating:</strong> ⭐ <%= book.rating %></p>
       <p><%= book.review %></p>
       <a href="/edit/<%= book.id %>">Edit</a>
+      <form action="/delete/<%= book.id %>" method="POST" style="display:inline;">
+      <button type="submit">Delete</button>
+      </form>
     </div>
     <hr>
   <% }); %>

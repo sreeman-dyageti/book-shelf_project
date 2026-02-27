@@ -141,6 +141,18 @@ app.post("/edit/:id",async (req,res)=>{
   }
 });
 
+// delete Book 
+app.post("/delete/:id",async (req,res)=>{
+  try {
+    const id= req.params.id;
+    const result=await db.query("DELETE FROM books WHERE id = $1",[id]);
+    res.redirect("/");
+  } catch (error) {
+    console.log(error)
+  }
+
+});
+
 
 
 
