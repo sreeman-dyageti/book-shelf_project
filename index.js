@@ -53,14 +53,24 @@ app.get("/",async (req,res)=>{
 
 // for new book adding form
 app.get("/add",async(req,res)=>{
-  res.render("add.ejs");
+ res.render("add.ejs", { sort: "newest" });
 });
 
 // add new book 
 app.post("/add", async (req, res) => {
   try {
     const { title, author, isbn, rating, review } = req.body;
-
+    console.log("ISBN received:", isbn);
+    // to validate ISBN
+    try {
+      await axios.get(`https://openlibrary.org/isbn/${isbn}.json`);
+    } catch (apiError ) {
+      return res.render("add.ejs", {
+        sort: "newest",
+        error: "Invalid ISBN. Book not found in Open Library."
+      });
+    }
+    console.log("API call successful");
     // Check if author exists
     let authorResult = await db.query(
       "SELECT * FROM authors WHERE name = $1",
@@ -89,6 +99,12 @@ app.post("/add", async (req, res) => {
 
   } catch (err) {
     console.log(err);
+    if (err.code === "23505") {
+    return res.render("add.ejs", {
+      sort: "newest",
+      error: "This book already exists in your shelf."
+    });
+  }
     res.send("Error Adding Book");
   }
 });
