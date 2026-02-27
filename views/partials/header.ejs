@@ -16,10 +16,17 @@
 <div class="topbar-nav">
 <a href="/">Home</a>
 <a href="/add">Add</a>
-<div>
-    <a href="/?sort=newest">Sort by Newest</a> |
-    <a href="/?sort=rating">Sort by Rating</a>
-  </div>
+<!-- for Sorting -->
+<form method="GET" action="/" style="display:inline;">
+  <select name="sort" onchange="this.form.submit()">
+    <option value="newest" <%= sort === "newest" ? "selected" : "" %>>
+      Sort by Newest
+    </option>
+    <option value="rating" <%= sort === "rating" ? "selected" : "" %>>
+      Sort by Rating
+    </option>
+  </select>
+</form>
 </div>
 </header>
     <main class="container">

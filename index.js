@@ -103,7 +103,7 @@ app.get("/edit/:id",async (req,res)=>{
       JOIN authors ON books.author_id = authors.id
        WHERE books.id = $1`,
       [id]);
-      res.render("edit.ejs",{ book:edit.rows[0]});
+    res.render("edit.ejs", { book: edit.rows[0], sort: "newest" });
     
   } catch (error) {
     console.log(error);
