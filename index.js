@@ -27,22 +27,32 @@ db.connect();
 app.get("/",async (req,res)=>{
   try {
     const sort= req.query.sort || "newest";
+    const search = req.query.search || "";
+
     let query=`
     SELECT books.*,authors.name AS author_name
     FROM books
     JOIN authors ON books.author_id = authors.id
   `;
-    if (sort === "rating") {
-      query +="ORDER BY rating DESC;"
-      
-    } else {
-      query +="ORDER BY created_at DESC;"
+
+   let values = [];
+
+    if (search) {
+      query += " WHERE books.title ILIKE $1";
+      values.push(`%${search}%`);
     }
 
-  const result = await db.query(query);
+    if (sort === "rating") {
+      query += " ORDER BY rating DESC";
+    } else {
+      query += " ORDER BY created_at DESC";
+    }
+
+    const result = await db.query(query, values);
     res.render("index.ejs",{
       books : result.rows,
-      sort: sort
+      sort: sort,
+      search
     });
   } catch (err) {
     console.error(err);
