@@ -63,7 +63,7 @@ app.get("/",async (req,res)=>{
 
 // for new book adding form
 app.get("/add",async(req,res)=>{
- res.render("add.ejs", { sort: "newest" });
+ res.render("add.ejs", { sort: "newest" ,search: ""});
 });
 
 // add new book 
@@ -129,7 +129,7 @@ app.get("/edit/:id",async (req,res)=>{
       JOIN authors ON books.author_id = authors.id
        WHERE books.id = $1`,
       [id]);
-    res.render("edit.ejs", { book: edit.rows[0], sort: "newest" });
+    res.render("edit.ejs", { book: edit.rows[0], sort: "newest", search: "" });
     
   } catch (error) {
     console.log(error);

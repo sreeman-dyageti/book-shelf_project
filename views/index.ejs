@@ -1,21 +1,29 @@
 <%- include("partials/header.ejs")  %>
+ <div class="book-grid">
   <% books.forEach(book => { %>
-    <div style="margin-bottom: 20px;">
+    <div class="book-card">
+
       <img 
         src="https://covers.openlibrary.org/b/isbn/<%= book.isbn %>-M.jpg" 
         alt="Cover"
-        width="120"
       />
 
-      <h3><%= book.title %></h3>
-      <p><strong>Author:</strong> <%= book.author_name %></p>
-      <p><strong>Rating:</strong> ⭐ <%= book.rating %></p>
-      <p><%= book.review %></p>
-      <a href="/edit/<%= book.id %>">Edit</a>
-      <form action="/delete/<%= book.id %>" method="POST" style="display:inline;">
-      <button type="submit">Delete</button>
-      </form>
+      <div class="book-info">
+        <h3><%= book.title %></h3>
+        <p class="author"><%= book.author_name %></p>
+        <p class="rating">⭐ <%= book.rating %></p>
+        <p class="review"><%= book.review %></p>
+
+        <div class="actions">
+          <a href="/edit/<%= book.id %>">Edit</a>
+
+          <form action="/delete/<%= book.id %>" method="POST">
+            <button type="submit">Delete</button>
+          </form>
+        </div>
+      </div>
+
     </div>
-    <hr>
   <% }); %>
+</div>
 <%- include("partials/footer.ejs")  %>
