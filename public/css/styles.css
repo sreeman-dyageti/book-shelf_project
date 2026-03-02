@@ -244,3 +244,196 @@ body {
   font-weight:600; padding:0.6rem 1rem; border-radius:6px;
   font-size:0.88rem; text-align:center;
 }
+
+
+
+
+
+
+
+
+/* FORM PAGES*/
+
+.form-page {
+  max-width: 640px;
+  margin: 3.5rem auto 6rem;
+  padding: 0 1.5rem;
+  opacity: 0;
+  animation: fadeUp 0.5s var(--ease) 0.08s forwards;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-bottom: 2rem;
+  transition: color 0.2s;
+}
+.back-link:hover { color: var(--coyote); }
+.back-link::before { content: '←'; font-size: 1rem; }
+
+.form-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: 3rem 2.75rem;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+.form-card::before {
+  content: '';
+  position: absolute; top: 0; right: 0;
+  width: 180px; height: 180px;
+  background: radial-gradient(ellipse at top right, rgba(227,169,61,0.10), transparent 70%);
+  pointer-events: none;
+}
+.form-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0;
+  width: 120px; height: 120px;
+  background: radial-gradient(ellipse at bottom left, rgba(107,115,3,0.07), transparent 70%);
+  pointer-events: none;
+}
+
+.form-heading {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.form-heading h1 {
+  font-family: var(--font-display);
+  font-size: 2.3rem; font-weight: 700;
+  color: var(--text-head); line-height: 1.1;
+}
+.form-heading p { color: var(--text-muted); font-size: 0.88rem; margin-top: 0.4rem; }
+
+.form-error {
+  background: #FDF0EE;
+  border: 1px solid #F0C4BC;
+  border-left: 4px solid var(--golden);
+  border-radius: var(--r-sm);
+  padding: 0.8rem 1.1rem;
+  color: #6B2D1A;
+  font-size: 0.875rem;
+  margin-bottom: 1.75rem;
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+}
+.form-error::before { content: '⚠'; flex-shrink: 0; }
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+.form-group { margin-bottom: 1.5rem; }
+
+.form-group label {
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--coyote);
+  margin-bottom: 0.5rem;
+}
+.form-group .hint {
+  font-size: 0.71rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-left: 0.4rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea {
+  width: 100%;
+  padding: 0.78rem 1.05rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  color: var(--text-head);
+  background: var(--bg);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--meat);
+  box-shadow: 0 0 0 4px rgba(227,169,61,0.13);
+  background: #fff;
+}
+.form-group textarea { resize: vertical; min-height: 120px; line-height: 1.65; }
+
+/* Star rating */
+.star-rating-label {
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--coyote);
+  margin-bottom: 0.55rem;
+}
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 0.25rem;
+}
+.star-rating input[type="radio"] { display: none; }
+.star-rating label {
+  font-size: 2.1rem;
+  cursor: pointer;
+  color: #D9CCB8;
+  transition: color 0.14s, transform 0.12s;
+  line-height: 1;
+  padding: 0; margin: 0;
+  text-transform: none; letter-spacing: 0; font-weight: 400;
+}
+.star-rating label:hover,
+.star-rating label:hover ~ label { color: var(--meat); transform: scale(1.2); }
+.star-rating input:checked ~ label { color: #D9CCB8; }
+.star-rating input:checked + label { color: var(--meat); }
+
+.form-divider {
+  height: 1px; background: var(--border);
+  margin: 1.75rem 0;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 0.95rem;
+  background: linear-gradient(135deg, var(--bg-dark2), var(--bg-dark));
+  color: var(--meat);
+  border: 1px solid rgba(227,169,61,0.3);
+  border-radius: var(--r-sm);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s, color 0.2s;
+  box-shadow: 0 4px 16px rgba(44,32,21,0.2);
+}
+.btn-submit:hover {
+  background: var(--meat);
+  color: var(--bg-dark);
+  border-color: var(--meat);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(227,169,61,0.38);
+}
+.btn-submit:active { transform: translateY(0); }

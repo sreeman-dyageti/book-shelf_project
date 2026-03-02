@@ -1,25 +1,60 @@
-<%- include("partials/header.ejs")  %>
-  <h1>Add New Book</h1>
+<%- include("partials/header.ejs") %>
 
-  <form action="/add" method="POST">
-    <label>Title:</label>
-    <input type="text" name="title" required><br><br>
+<div class="form-page">
 
-    <label>Author:</label>
-    <input type="text" name="author" required><br><br>
+  <a href="/" class="back-link">Back to Library</a>
 
-    <label>ISBN:</label>
-    <input type="text" name="isbn" required><br><br>
+  <div class="form-card">
 
-    <label>Rating (1-5):</label>
-    <input type="number" name="rating" min="1" max="5"><br><br>
+    <div class="form-heading">
+      <h1>Add a Book</h1>
+      <p>Record a new addition to your personal collection.</p>
+    </div>
 
-    <label>Review:</label><br>
-    <textarea name="review"></textarea><br><br>
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="form-error"><%= error %></div>
+    <% } %>
 
-    <button type="submit">Add Book</button>
-  </form>
+    <form action="/add" method="POST">
 
-  <br>
-  
-<%- include("partials/footer.ejs")  %>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" id="title" name="title" placeholder="e.g. Atomic Habits" required />
+        </div>
+        <div class="form-group">
+          <label for="author">Author</label>
+          <input type="text" id="author" name="author" placeholder="e.g. James Clear" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="isbn">ISBN <span class="hint">(used to fetch book cover)</span></label>
+        <input type="text" id="isbn" name="isbn" placeholder="e.g. 9780735211292" required />
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="form-group">
+        <span class="star-rating-label">Your Rating</span>
+        <div class="star-rating">
+          <input type="radio" name="rating" id="s5" value="5" /><label for="s5" title="5 stars">★</label>
+          <input type="radio" name="rating" id="s4" value="4" /><label for="s4" title="4 stars">★</label>
+          <input type="radio" name="rating" id="s3" value="3" checked /><label for="s3" title="3 stars">★</label>
+          <input type="radio" name="rating" id="s2" value="2" /><label for="s2" title="2 stars">★</label>
+          <input type="radio" name="rating" id="s1" value="1" /><label for="s1" title="1 star">★</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="review">Your Review <span class="hint">(optional)</span></label>
+        <textarea id="review" name="review" placeholder="What did you think about this book?"></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit">Add to Shelf →</button>
+
+    </form>
+  </div>
+</div>
+
+<%- include("partials/footer.ejs") %>
