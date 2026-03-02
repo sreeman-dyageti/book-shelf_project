@@ -26,10 +26,9 @@ Book Shelf is a full-stack web application that allows users to manage their per
 
 
 ## 📦 Installation
-
+```bash
 1. Clone the repository:
 
-```bash
 git clone https://github.com/sreeman-dyageti/book-shelf_project
 
 2 .Install dependencies:
@@ -38,11 +37,7 @@ npm install
 
 3. Make sure PostgreSQL is running.
 
-4. Create database:
-
-CREATE DATABASE bookshelf;
-
-5. Run the server:
+4. Run the server:
 
 npm run dev
 
