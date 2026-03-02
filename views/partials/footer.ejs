@@ -1,7 +1,23 @@
 </main>
 
-<footer>
-    <!-- empty for now  -->
+<footer class="shelf-footer">
+  <div class="footer-logo">📚 BookShelf</div>
+  <div class="footer-copy">&copy; <%= new Date().getFullYear() %> &nbsp;·&nbsp; Your personal reading record</div>
 </footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Mobile menu toggle -->
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+  }
+</script>
+
 </body>
 </html>
