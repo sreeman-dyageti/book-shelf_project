@@ -1,24 +1,60 @@
 <%- include("partials/header.ejs") %>
 
-<h1>Edit Book</h1>
+<div class="form-page">
 
-<form action="/edit/<%= book.id %>" method="POST">
-  <label>Title:</label>
-  <input type="text" name="title" value="<%= book.title %>" required><br><br>
+  <a href="/" class="back-link">Back to Library</a>
 
-  <label>Author:</label>
-  <input type="text" name="author" value="<%= book.author_name %>" required><br><br>
+  <div class="form-card">
 
-  <label>ISBN:</label>
-  <input type="text" name="isbn" value="<%= book.isbn %>" required><br><br>
+    <div class="form-heading">
+      <h1>Edit Book</h1>
+      <p>Update the details for <em style="font-family:var(--font-display);color:var(--coyote)"><%= book.title %></em></p>
+    </div>
 
-  <label>Rating:</label>
-  <input type="number" name="rating" min="1" max="5" value="<%= book.rating %>"><br><br>
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="form-error"><%= error %></div>
+    <% } %>
 
-  <label>Review:</label><br>
-  <textarea name="review"><%= book.review %></textarea><br><br>
+    <form action="/edit/<%= book.id %>" method="POST">
 
-  <button type="submit">Update Book</button>
-</form>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" id="title" name="title" value="<%= book.title %>" required />
+        </div>
+        <div class="form-group">
+          <label for="author">Author</label>
+          <input type="text" id="author" name="author" value="<%= book.author_name %>" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="isbn">ISBN <span class="hint">(changing this updates the cover)</span></label>
+        <input type="text" id="isbn" name="isbn" value="<%= book.isbn %>" required />
+      </div>
+
+      <div class="form-divider"></div>
+
+      <div class="form-group">
+        <span class="star-rating-label">Your Rating</span>
+        <div class="star-rating">
+          <input type="radio" name="rating" id="s5" value="5" <%= book.rating == 5 ? 'checked' : '' %> /><label for="s5">★</label>
+          <input type="radio" name="rating" id="s4" value="4" <%= book.rating == 4 ? 'checked' : '' %> /><label for="s4">★</label>
+          <input type="radio" name="rating" id="s3" value="3" <%= book.rating == 3 ? 'checked' : '' %> /><label for="s3">★</label>
+          <input type="radio" name="rating" id="s2" value="2" <%= book.rating == 2 ? 'checked' : '' %> /><label for="s2">★</label>
+          <input type="radio" name="rating" id="s1" value="1" <%= book.rating == 1 ? 'checked' : '' %> /><label for="s1">★</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="review">Your Review <span class="hint">(optional)</span></label>
+        <textarea id="review" name="review" placeholder="What did you think about this book?"><%= book.review %></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit">Save Changes →</button>
+
+    </form>
+  </div>
+</div>
 
 <%- include("partials/footer.ejs") %>
