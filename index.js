@@ -14,11 +14,11 @@ app.set("view engine", "ejs");
 
 // DB connection
 const db = new pg.Client({
-  user: "postgres",
-  host: "localhost",
-  database: "bookshelf",
-  password: "sreeman@db",
-  port: 5432,
+  user: process.env.PG_USER,
+  host: process.env.PG_HOST,
+  database: process.env.PG_DATABASE,
+  password: process.env.PG_PASSWORD,
+  port: process.env.PG_PORT,
 });
 
 db.connect();
@@ -178,20 +178,6 @@ app.post("/delete/:id",async (req,res)=>{
   }
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
